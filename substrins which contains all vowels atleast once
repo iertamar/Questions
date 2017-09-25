@@ -1,0 +1,43 @@
+import java.util.*;
+
+public class gfg {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+        ArrayList <String> list1 = new ArrayList<String>();
+        String str = "";
+        for(int i = 0; i<s.length(); i++)
+        {
+            for(int j =i+4; j<s.length(); j++)
+            {
+                ArrayList <Character> list = new ArrayList<Character>();
+                int count = 0, x =0;
+                for(int k = i; k<=j ; k++)
+                {
+                    if(s.charAt(k)=='a' || s.charAt(k)=='e' || s.charAt(k)=='i' ||s.charAt(k)=='o' || s.charAt(k)=='u')
+                    {
+                        if (!list.contains(s.charAt(k)))
+                        {
+                            list.add(s.charAt(k));
+                            count++;
+                        }
+                        if(count==5)
+                        {
+                            x = 10;
+                            break;
+                        }
+                    }
+                }
+                if(x==10)
+                {
+                    str = s.substring(i,j+1);
+                    list1.add(str);
+                }
+            }
+        }
+        for(int i=0; i<list1.size(); i++)
+        {
+            System.out.println(list1.get(i));
+        }
+    }
+}
