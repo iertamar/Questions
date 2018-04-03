@@ -1,0 +1,46 @@
+public class Solution {
+    public ArrayList<String> restoreIpAddresses(String A) {
+        int len = A.length();
+        String s = A ;
+        ArrayList<String> list = new ArrayList<>();
+        if(len > 12)
+             return null ;
+        for(int i = 1 ; i <= len -2 ; i++ )
+        {
+            for(int j = i+1; j<=len-1 ; j++)
+            {
+                for(int k = j+1 ; k<=len ; k++)
+                {
+                    s = s.substring(0 , k) + "-" + s.substring(k , len);
+                    s = s.substring(0 , j) + "-" + s.substring(j , len + 1);
+                    s = s.substring(0 , i) + "-" + s.substring(i , len + 2);
+                    if(isValid(s) && s.charAt(s.length()-1)!='-')
+                       {
+                           s = s.replace("-" , ".");
+                           list.add(s);
+                       }
+                    s = A ;
+                }
+                
+            }
+        }
+        return list;
+    }
+    
+    public static boolean isValid(String s)
+    {
+        String ip[] ;
+        ip = s.split("-");
+        for(int i = 0; i< ip.length ; i++)
+        {
+            if(ip[i].length() >3 || Integer.valueOf(ip[i]) <0 || Integer.valueOf(ip[i]) >255)
+                return false;
+            if(ip[i].length() >1 && Integer.valueOf(ip[i])==0)
+                return false;
+            if(ip[i].length() >1 && Integer.valueOf(ip[i])!=0 && ip[i].charAt(0)=='0')
+                return false;
+        }
+        return true;
+    }
+    
+}
