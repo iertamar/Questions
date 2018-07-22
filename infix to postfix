@@ -1,0 +1,93 @@
+package Interview ;
+import java.util.*;
+
+class hello{
+    static Stack<Integer> st = new Stack<>();
+    static Stack<Character> op = new Stack<>() ;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next() ;
+        int ans = find(s);
+        System.out.println(ans);
+    }
+    public static int find(String s)
+    {
+        for(int i = 0; i <s.length() ; i++)
+        {
+            char ch = s.charAt(i);
+            if(ch>='0' && ch<='9')
+            {
+                int chi = ch-'0';
+                st.push(chi);
+            }
+            else if(ch=='(')
+            {
+                op.push('(');
+            }
+            else if (ch==')')
+            {
+                while(!op.isEmpty() && op.peek()!='(')
+                {
+                    char popped = op.pop() ;
+                    compute(popped) ;
+                }
+                op.pop() ;
+            }
+            else
+            {
+                while(!op.isEmpty() && find(ch , op.peek() )==true )
+                {
+                    char popped = op.pop() ;
+                    compute(popped) ;
+                }
+                    op.push(ch);
+
+            }
+        }
+        while(!op.isEmpty())
+        {
+            char popped = op.pop() ;
+            compute(popped) ;
+        }
+        return st.pop();
+    }
+    static void compute(char ch)
+    {
+        String s = ch+"" ;
+        if(s.equals("*"))
+        {
+            int a = st.pop();
+            int b = st.pop();
+            System.out.println(a);
+            System.out.println(b);
+            st.push(b*a) ;
+        }
+        else if(s.equals("/"))
+        {
+            int a = st.pop();
+            int b = st.pop();
+            st.push(b/a) ;
+        }
+        else if(s.equals("-"))
+        {
+            int a = st.pop();
+            int b = st.pop();
+            st.push(b-a) ;
+        }
+        else if(s.equals("+"))
+        {
+            int a = st.pop();
+            int b = st.pop();
+            st.push(b+a) ;
+        }
+    }
+    static boolean find(char ch1 , char ch2)
+    {
+        if(ch2=='(')
+            return false ;
+        if((ch2=='+' || ch2=='-') && (ch1=='*' || ch1=='/'))
+            return false ; ///// add onto stack ; ch1 current character
+        return true ;
+
+    }
+}
